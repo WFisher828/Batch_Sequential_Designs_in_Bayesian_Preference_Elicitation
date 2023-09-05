@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 
 #This module "Baseline_Functions_Definitions" includes functions that the questionnaire procedure and experimental framework
 #are based off of. The functions include:
@@ -11,17 +9,12 @@
 #4. g_fun_linear_regression
 
 
-# In[2]:
-
 
 import numpy as np
 import pandas as pd
 import scipy.integrate
 import math
 from sklearn import linear_model
-
-
-# In[3]:
 
 
 #Compute expectation and variance of Z random variable parameterized by m and v
@@ -46,9 +39,6 @@ def z_expectation_variance(m,v):
     var_z = (scipy.integrate.quad(fun3, -integ_bound, integ_bound)[0] / C) - mu_z**2
     
     return [mu_z, var_z]
-
-
-# In[4]:
 
 
 def g_fun(m,v,n=2):
@@ -98,9 +88,6 @@ def g_fun(m,v,n=2):
     return [C*Sig_z_1**(1/float(n)) + (1-C)*Sig_z_2**(1/float(n)), C*Sig_z_1**(1/float(n)), (1-C)*Sig_z_2**(1/float(n))]
 
 
-# In[5]:
-
-
 #A function for doing linear regression on the log(g_fun).
 def g_fun_linear_regression(m_lower,m_upper,v_lower,v_upper,m_axis_num,v_axis_num):
     #m_lower is the lower bound for the grid in variable m
@@ -134,47 +121,3 @@ def g_fun_linear_regression(m_lower,m_upper,v_lower,v_upper,m_axis_num,v_axis_nu
     v_coeff = lm.coef_[1]
 
     return[m_coeff,v_coeff]
-
-
-# In[6]:
-
-
-#NEED TO MOVE THIS TO A SEPARATE FILE
-#[mu_log_coeff_1, Sig_log_coeff_1] = g_fun_linear_regression(0.0,25.5,0.1,4.0*42.0,51,2*4*42)
-#print(mu_log_coeff_1,Sig_log_coeff_1)
-#These two coefficient values are found from the g_fun_linear_regression above.
-#mu_log_coeff = 0.03596804494858049
-#Sig_log_coeff = -0.020785433813507195
-
-
-# In[7]:
-
-
-#NEED TO MOVE THIS TO A SEPARATE FILE
-#print(g_fun(0.0, 493.39367088607594))
-#print(g_fun(0.0, 672.0))
-
-
-# In[8]:
-
-
-#NEED TO MOVE THIS TO A SEPARATE FILE
-#[mu_log_coeff, Sig_log_coeff] = g_fun_linear_regression(0.0,12.70,0.1,42.0,24,84)
-#print(mu_log_coeff,Sig_log_coeff)
-
-
-# In[9]:
-
-
-#NEED TO MOVE THIS TO A SEPARATE FILE
-#[mu_log_coeff_2, Sig_log_coeff_2] = g_fun_linear_regression(0.0,7,0.1,5.25,24,24)
-#print(mu_log_coeff_2,Sig_log_coeff_2)
-
-
-# In[10]:
-
-
-#NEED TO MOVE THIS TO A SEPARATE FILE
-#[mu_log_coeff_3, Sig_log_coeff_3] = g_fun_linear_regression(0.0,5.0,1.0,10,25,25)
-#print(mu_log_coeff_3,Sig_log_coeff_3) #Change
-

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 
 #This module 'Questionnaire_Procedure' has all of the functions needed to do one-step and 
 #two-step questionnaire, along with the two-step acquisition function since it depends on functions
@@ -13,8 +11,6 @@
 #4. two_step_g_acq (WE INCLUDE THIS HERE BECAUSE IT DEPENDS ON moment_matching_update AND g_opt, THEMATICALLY THIS
 #SHOULD NOT BE HERE)
 
-
-# In[2]:
 
 
 import gurobipy as gp
@@ -36,13 +32,6 @@ from Baseline_Functions_Definitions import z_expectation_variance, g_fun #mu_log
 #1. z_expectation_variance
 #2. g_fun
 
-#!!NO LONGER USING!!
-#VARIABLES: (found from linear regression on log(g) in 'Baseline_Functions_Definitions')
-#mu_log_coeff = 0.03596804494858049
-#Sig_log_coeff = -0.020785433813507195
-
-
-# In[3]:
 
 
 def moment_matching_update(x,y,mu_prior,Sig_prior):
@@ -73,20 +62,6 @@ def moment_matching_update(x,y,mu_prior,Sig_prior):
     Sig_posterior = ((var_z-1)/Sig_v)*np.outer(Sig_dot_v,Sig_dot_v) + Sig_prior_vec
     
     return mu_posterior, Sig_posterior
-
-
-# In[4]:
-
-
-#Example2: moment_matching_update
-#ex2_x = [1,1,0,1]
-#ex2_y = [0,0,1,1]
-#ex2_mu = [0,0,0,0]
-#ex2_Sig = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
-#print(moment_matching_update(ex2_x,ex2_y,ex2_mu,ex2_Sig))
-
-
-# In[5]:
 
 
 #Formulate an optimization problem to get the optimal solution to the one-step lookahead problem
@@ -138,9 +113,6 @@ def g_opt(mu, Sig, mu_log_coeff, Sig_log_coeff):
     
     
     return [m.objVal,x_sol,y_sol]
-
-
-# In[6]:
 
 
 #Formulate an optimization problem to get the optimal solution to the one-step lookahead problem when there are multiple
@@ -235,9 +207,6 @@ def g_opt_multi_lvl(mu, Sig, mu_log_coeff, Sig_log_coeff, num_lvl_vec):
     return [m.objVal,x,y,xb.X,yb.X]
 
 
-# In[7]:
-
-
 #Formulate an optimization problem to get the optimal solution to the one-step lookahead problem when there are multiple
 #levels for each attribute. The products are binarized before the preference learning procedure.
 
@@ -283,81 +252,6 @@ def g_opt_multi_lvl_v2(mu_b, Sig_b, mu_log_coeff, Sig_log_coeff, num_lvl_vec):
     m.optimize()
     
     return [m.objVal,xb.X,yb.X]
-
-
-# In[8]:
-
-
-#This will need to be moved!!!
-#Example 5: g_opt
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-#random.seed(100)
-
-#ex5_mu_1 = rng.uniform(low = -1.0, high = 1.0, size = 6)# np.array(6*[1.0])
-#ex5_Sig_1 = sklearn.datasets.make_spd_matrix(6)#np.identity(6)
-#ex5_mu_2 =  np.array([-0.125, 0.25, -0.375, 0.5, -0.625, 0.75, -0.875, 1.0, -1.125, 1.25, -1.375, 1.5])
-#ex5_Sig_2 = sklearn.datasets.make_spd_matrix(12)#np.identity(12)
-#ex5_mlc = 0.030273590906016633#for 6 attributes # 0.019304323842200457 #for 12 attributes
-#ex5_Slc = -0.006008375621810446#for 6 attributes # -0.0016111804008083416 #for 12 attributes
-#start_time_one_step_1 = time.perf_counter()
-#print(g_opt(ex5_mu_1,ex5_Sig_1,ex5_mlc,ex5_Slc))
-#print(time.perf_counter() - start_time_one_step_1, "seconds")
-
-#start_time_one_step_2 = time.perf_counter()
-#print(g_opt(ex5_mu_2,ex5_Sig_2,ex5_mlc,ex5_Slc))
-#print(time.perf_counter() - start_time_one_step_2, "seconds")
-
-
-# In[9]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#Example 5a: g_opt_multi_lvl
-#rng = np.random.default_rng(10000) 
-#np.random.seed(10000)
-#random.seed(10000)
-
-#ex5a_mu_1 = rng.uniform(low = -1.0, high = 1.0, size = 6)# np.array(6*[1.0])
-#ex5a_Sig_1 = sklearn.datasets.make_spd_matrix(6)#np.identity(6)
-#ex5a_num_lvl_vec = [3,3,3,3,3,3]
-#ex5_mu_2 =  np.array([-0.125, 0.25, -0.375, 0.5, -0.625, 0.75, -0.875, 1.0, -1.125, 1.25, -1.375, 1.5])
-#ex5_Sig_2 = sklearn.datasets.make_spd_matrix(12)#np.identity(12)
-#ex5a_mlc = 0.030273590906016633#for 6 attributes # 0.019304323842200457 #for 12 attributes
-#ex5a_Slc = -0.006008375621810446#for 6 attributes # -0.0016111804008083416 #for 12 attributes
-#ex5a_mlc_1 = 0.013840168431387311
-#ex5a_Slc_1 = -0.000737349763664796
-#start_time_one_step_1 = time.perf_counter()
-#print(g_opt_multi_lvl(ex5a_mu_1,ex5a_Sig_1,ex5a_mlc,ex5a_Slc,ex5a_num_lvl_vec))
-#print(time.perf_counter() - start_time_one_step_1, "seconds")
-
-#start_time_one_step_2 = time.perf_counter()
-#print(g_opt_multi_lvl(ex5a_mu_1,ex5a_Sig_1,ex5a_mlc_1,ex5a_Slc_1,ex5a_num_lvl_vec))
-#print(time.perf_counter() - start_time_one_step_2, "seconds")
-
-
-# In[10]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#Example 5b: g_opt_multi_lvl_v2
-#rng = np.random.default_rng(1000) 
-#np.random.seed(1000)
-#random.seed(1000)
-
-#ex5b_mu_1 = rng.uniform(low = -1.0, high = 1.0, size = 6)# np.array(6*[1.0])
-#ex5b_Sig_1 = sklearn.datasets.make_spd_matrix(6)#np.identity(6)
-#ex5b_num_lvl_vec = [2,2,2,2,2,2]
-#ex5_mu_2 =  np.array([-0.125, 0.25, -0.375, 0.5, -0.625, 0.75, -0.875, 1.0, -1.125, 1.25, -1.375, 1.5])
-#ex5_Sig_2 = sklearn.datasets.make_spd_matrix(12)#np.identity(12)
-#ex5b_mlc = 0.030273590906016633#for 6 attributes # 0.019304323842200457 #for 12 attributes
-#ex5b_Slc = -0.006008375621810446#for 6 attributes # -0.0016111804008083416 #for 12 attributes
-#start_time_one_step_1 = time.perf_counter()
-#print(g_opt_multi_lvl_v2(ex5b_mu_1,ex5b_Sig_1,ex5b_mlc,ex5b_Slc,ex5b_num_lvl_vec))
-#print(time.perf_counter() - start_time_one_step_1, "seconds")
-
-
-# In[11]:
 
 
 #Define optimization problem for approximate two-step acquisition, exploiting orthogonality property
@@ -441,21 +335,6 @@ def two_stage_g_opt(mu, Sig, mu_log_coeff, Sig_log_coeff, epsilon, t_lim = 100):
     return [x_0_sol,y_0_sol,x_1_sol,y_1_sol]
 
 
-# In[12]:
-
-
-#Example10: two_stage_g_opt
-#ex10_mu = np.array([1,0,0,0])
-#ex10_Sig = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
-#ex10_mlc = 0.036
-#ex10_Slc = -0.021
-#ex10_eps = 0.1
-#print('two_stage_question_pair: ' + str(two_stage_g_opt(ex10_mu,ex10_Sig,ex10_mlc,ex10_Slc,ex10_eps)))
-
-
-# In[13]:
-
-
 #A function to evaluate the two_step value of a question given prior parameters mu_0 and Sig_0
 #x_0 and y_0 are a question pair.
 #This is the exact two-step g value.
@@ -496,10 +375,6 @@ def two_step_g_acq(mu_0,Sig_0,mu_log_coeff,Sig_log_coeff,x_0,y_0):
     two_step_g = g_fun(m_10,v_10)[0]*fst_stg_g_sum_term[0] + g_fun(m_11,v_11)[0]*fst_stg_g_sum_term[1]
     
     return [two_step_g,x_10,y_10,x_11,y_11]
-
-
-# In[14]:
-
 
 #A function to evaluate the two_step value of a question given prior parameters mu_0 and Sig_0
 #x_0 and y_0 are a question pair, where x_0 and y_0 have attributes with multiple quantitative levels.
@@ -544,42 +419,3 @@ def multlvl_two_step_g_acq(mu_0,Sig_0,mu_log_coeff,Sig_log_coeff,x_0,y_0,num_lvl
     two_step_g = g_fun(m_10,v_10)[0]*fst_stg_g_sum_term[0] + g_fun(m_11,v_11)[0]*fst_stg_g_sum_term[1]
     
     return [two_step_g,x_10,y_10,x_11,y_11]
-
-
-# In[15]:
-
-
-#THIS NEEDS TO BE MOVED!!!
-#Example7: two_step_g_acq
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-#random.seed(100)
-
-#ex7_mu = rng.uniform(low = -1.0, high = 1.0, size = 6)
-#ex7_Sig = sklearn.datasets.make_spd_matrix(6)#[[1,0,0,0,0,0],[0,1,0,0,0,0],[0,0,1,0,0,0],[0,0,0,1,0,0],[0,0,0,0,1,0],[0,0,0,0,0,1]]
-#ex7_mlc = 0.030273590906016633
-#ex7_Slc = -0.006008375621810446
-#ex7_x = [1,1,1,1,1,1]
-#ex7_y = [0,0,0,0,0,0]
-#print(two_step_g_acq(ex7_mu,ex7_Sig,ex7_mlc,ex7_Slc,ex7_x,ex7_y))
-
-
-# In[16]:
-
-
-#This will need to be moved!!!
-#Example7a: multlvl_two_step_g_acq
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-#random.seed(100)
-
-#ex7a_mu = rng.uniform(low = -1.0, high = 1.0, size = 6)
-#print(ex7a_mu)
-#ex7a_Sig = sklearn.datasets.make_spd_matrix(6)#[[1,0,0,0,0,0],[0,1,0,0,0,0],[0,0,1,0,0,0],[0,0,0,1,0,0],[0,0,0,0,1,0],[0,0,0,0,0,1]]
-#ex7a_mlc = 0.030273590906016633
-#ex7a_Slc = -0.006008375621810446
-#ex7a_x = [1,1,1,1,1,1]
-#ex7a_y = [0,0,0,0,0,0]
-#ex7a_num_lvl_vec = [2,2,2,2,2,2]
-#print(multlvl_two_step_g_acq(ex7a_mu,ex7a_Sig,ex7a_mlc,ex7a_Slc,ex7a_x,ex7a_y,ex7a_num_lvl_vec))
-

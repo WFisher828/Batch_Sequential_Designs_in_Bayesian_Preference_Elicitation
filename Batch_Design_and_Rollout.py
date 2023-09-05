@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
 
 
 #This module 'Batch_Design_and_Rollout' includes functions to construct a batch design as well as
@@ -18,8 +17,6 @@
 #monte_carlo_rollout
 #rollout_with_batch_design_acquisition
 
-
-# In[2]:
 
 
 import gurobipy as gp
@@ -38,26 +35,6 @@ import sys
 sys.path.append(r'C:\Users\wsfishe\Desktop\PreferenceElicitationCode')
 from Baseline_Functions_Definitions import z_expectation_variance, g_fun, g_fun_linear_regression
 from Questionnaire_Procedure import moment_matching_update, g_opt, two_step_g_acq
-
-
-# In[3]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#mu_log_coeff_6,Sig_log_coeff_6 = g_fun_linear_regression(0,12.70,0.1,42.0,24,84)
-#print(mu_log_coeff_6,Sig_log_coeff_6)
-
-
-# In[4]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#This is used to instantiate the coefficient values for optimization when there are 12 attributes.
-#mu_log_coeff_12,Sig_log_coeff_12 = g_fun_linear_regression(0, 24.50, 0.1, 156.0, 49, 312)
-#print(mu_log_coeff_12,Sig_log_coeff_12)
-
-
-# In[5]:
 
 
 #This function is used to check the feasibility of the orthogonality constraints used in the batch design for a given 
@@ -106,8 +83,6 @@ def orthogonal_constraint_feas(mu,Sig,delta,batch_size,t_lim=30):
         
     return feasibility
 
-
-# In[6]:
 
 
 #This function constructs a batch design of size k <= (number of attributes) where we enforce mutual 
@@ -167,9 +142,6 @@ def batch_design_delta_penalty(mu,Sig,batch_size,mu_log_coeff,Sig_log_coeff,M=10
         Q[i].append(Y[i].X)
         
     return[Q,delta.X]
-
-
-# In[7]:
 
 
 #This function constructs a batch design based off of average question mean, average question variance, and average
@@ -260,23 +232,6 @@ def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     return[Q,D]
 
 
-# In[8]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#Example for batch_design_AO
-#mu_ao = np.array(6*[1.0])
-#Sig_ao = 1.0*np.identity(6)
-#batch_size_ao = 4
-#alpha_ao = 0.2813
-#kappa_ao = -0.1019
-#gamma_ao = 0.0577
-#print(batch_design_AO(mu_ao,Sig_ao,batch_size_ao,alpha_ao,kappa_ao,gamma_ao))
-
-
-# In[9]:
-
-
 #This function constructs a batch design based off of average question mean, average question variance, and MAXIMUM
 #question orthogonality. For the average question orthogonality, we take the absolute value of the summands rather than
 #the square. We also normalize mu and Sig in the objective so that we do not need to keep on refitting the parameters 
@@ -352,24 +307,6 @@ def batch_design_MO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
         
     return[Q,delta.X]
 
-
-# In[10]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#Example for batch_design_MO
-#mu_mo = np.array(6*[1.0])
-#Sig_mo = 1.0*np.identity(6)
-#batch_size_mo = 4
-#alpha_mo = 0.2798
-#kappa_mo = -0.1000
-#gamma_mo = 0.0251
-#print(batch_design_MO(mu_mo,Sig_mo,batch_size_mo,alpha_mo,kappa_mo,gamma_mo))
-
-
-# In[11]:
-
-
 #This function constructs a batch design of size k <= (number of attributes) where we enforce mutual 
 #Sigma-orthogonality between the k questions. The orthogonality condition makes it so that the D-error minimization
 #can be written as a product of g (one-step lookahead) functions. In this function, we are given a initial delta which is 
@@ -442,91 +379,6 @@ def batch_design_delta_refine(mu,Sig,batch_size,mu_log_coeff,Sig_log_coeff,start
     return[Q,delta]
 
 
-# In[12]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#An example of the batch design delta penalty algorithm.
-#rng = np.random.default_rng(10000) 
-#np.random.seed(10000)
-
-#num_penalty = 6
-#mu_test_penalty = rng.uniform(low = -1.0, high = 1.0, size = num_penalty)#np.array(num_penalty*[1.0])#rng.uniform(low = -1.0, high = 1.0, size = num_penalty)
-#Sig_test_penalty = sklearn.datasets.make_spd_matrix(num_penalty)#np.identity(num_penalty)#sklearn.datasets.make_spd_matrix(num_penalty)
-#batch_size_penalty = 4
-#print('mu: ' + str(mu_test_penalty))
-#print('Sig: ' + str(Sig_test_penalty))
-#print(batch_design_delta_penalty(mu_test_penalty,Sig_test_penalty,batch_size_penalty,mu_log_coeff_6,Sig_log_coeff_6,M = 0.01))
-
-
-# In[13]:
-
-
-#WE MIGHT DELETE THIS FULLY!!!
-#Create a graph showcasing changing of orthogonality delta with parameter M
-#M_values = np.arange(0.01,1.01,0.01)
-#M_val_len = len(M_values)
-#delta_values = np.array(M_val_len*[0.0])
-#for i in range(M_val_len):
-    #delta_values[i] = batch_design_delta_penalty(mu_test_penalty,Sig_test_penalty,batch_size_penalty,
-                                                 #mu_log_coeff_6,Sig_log_coeff_6,M = M_values[i])[1]
-
-#print(delta_values)
-#plt.title("Batch Orthogonality Variation with Changing Orthogonality Parameter") 
-#plt.xlabel("Orthogonality Parameter") 
-#plt.ylabel("Batch Orthogonality Measure") 
-#plt.plot(M_values,delta_values) 
-#plt.show()
-
-
-# In[14]:
-
-
-#WE MIGHT DELETE THIS FULLY!!!
-#M_values_01 = np.arange(0.02,1.01,0.01)
-#delta_values_01 = delta_values[1:]
-#plt.title("Batch Orthogonality Variation with Changing Orthogonality Parameter") 
-#plt.xlabel("Orthogonality Parameter") 
-#plt.ylabel("Batch Orthogonality Measure") 
-#plt.plot(M_values_01,delta_values_01) 
-#plt.show()
-
-
-# In[15]:
-
-
-#WE WILL NEED TO MOVE THIS!!!
-#An example of the batch design delta refine algorithm.
-#rng = np.random.default_rng(10000) 
-#np.random.seed(10000)
-
-#num_refine = 6
-#mu_test_refine = rng.uniform(low = -1.0, high = 1.0, size = num_refine)#np.array(num*[1.0])
-#Sig_test_refine = sklearn.datasets.make_spd_matrix(num_refine)#np.identity(num)
-#batch_size_refine = 4
-#delta_start_refine = 2.0
-#print(batch_design_delta_refine(mu_test_refine,Sig_test_refine,batch_size_refine,
-                                #mu_log_coeff_6,Sig_log_coeff_6,delta_start_refine))
-
-
-# In[16]:
-
-
-#WE WILL NEED TO MOVE THIS
-#An example of the feasibility checking algorithm
-#rng = np.random.default_rng(10000) 
-#np.random.seed(10000)
-
-#feas_num = 6
-#Sig_feas_test = sklearn.datasets.make_spd_matrix(feas_num)
-#delta_feas = 0.0025
-#batch_feas = 4
-#print(orthogonal_constraint_feas(Sig_feas_test,delta_feas,batch_feas))
-
-
-# In[17]:
-
-
 #This function is used for calculating the probability of a user picking x over y.
 def question_selection_prob(mu,Sig,x,y):
     #mu is mean parameter of the prior
@@ -546,26 +398,6 @@ def question_selection_prob(mu,Sig,x,y):
     probability = scipy.integrate.quad(fun1, -integ_bound, integ_bound)[0]
     
     return probability
-
-
-# In[18]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#This is to look at the question_selection_prob function
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-#num_prob = 6
-#mu_test_prob = rng.uniform(low = -1.0, high = 1.0, size = num_prob)#np.array(num*[1.0])
-#Sig_test_prob = sklearn.datasets.make_spd_matrix(num_prob)# np.identity(num_prob)
-#print(mu_test_prob)
-#print(Sig_test_prob)
-#x_test_prob = num_prob*[1]
-#y_test_prob = num_prob*[0]
-#print('prob x over y:' + str(question_selection_prob(mu_test_prob,Sig_test_prob,x_test_prob,y_test_prob)))
-
-
-# In[19]:
 
 
 #This code is to perform full enumerative rollout 
@@ -638,9 +470,6 @@ def rollout(mu,Sig,x,y,rollout_length,mu_log_coeff,Sig_log_coeff):
     weighted_det_sum = sum(np.sqrt(np.linalg.det(node[1]))*node[2] for node in N)
     
     return weighted_det_sum
-
-
-# In[20]:
 
 
 #This code is used to perform rollout using monte-carlo method
@@ -730,48 +559,6 @@ def monte_carlo_rollout(mu,Sig,x,y,rollout_length,mu_log_coeff,Sig_log_coeff,sam
     return determinant_estimate
 
 
-# In[21]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#Example of rollout method:
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-#num_attr = 6
-#roll_len = 8
-#mu_roll = num_attr*[1.0]#rng.uniform(low = -1.0, high = 1.0, size = num_attr)#
-#Sig_roll = np.identity(num_attr)#sklearn.datasets.make_spd_matrix(num_attr)#
-#x_roll = [1.0,1.0,1.0,0.0,0.0,0.0]#num_attr*[1.0]
-#y_roll = [0.0,0.0,0.0,1.0,1.0,1.0]#num_attr*[0.0]
-
-#start_time_roll_t1 = time.perf_counter()
-#print(rollout(mu_roll,Sig_roll,x_roll,y_roll,roll_len,mu_log_coeff_6,Sig_log_coeff_6))
-#print("Overall Rollout: ",time.perf_counter() - start_time_roll_t1, "seconds")
-
-
-# In[22]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#Example of monte_carlo_rollout method:
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-#num_attr = 12
-#roll_len = 11
-#budget = 50
-#mu_mcroll = num_attr*[1.0]#rng.uniform(low = -1.0, high = 1.0, size = num_attr)#num_attr*[0.5]
-#Sig_mcroll = np.identity(num_attr)#sklearn.datasets.make_spd_matrix(num_attr)#np.identity(num_attr)
-#x_mcroll = [1.0,1.0,1.0,1.0,1.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0]#num_attr*[1.0]
-#y_mcroll = [0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,1.0,1.0,1.0,1.0]#num_attr*[0.0]
-
-#start_time_mcroll_t1 = time.perf_counter()
-#print(monte_carlo_rollout(mu_mcroll,Sig_mcroll,x_mcroll,y_mcroll,roll_len,mu_log_coeff_12,Sig_log_coeff_12,budget))
-#print("Overall MC-Rollout: ",time.perf_counter() - start_time_mcroll_t1, "seconds")
-
-
-# In[23]:
-
-
 #This function is used for constructing a batch design and performing rollout on this batch design, returning the question
 #amongst the batch that results in the lowest average determinant value
 
@@ -824,132 +611,8 @@ def rollout_with_batch_design_acquisition(mu,Sig,mu_log_coeff,Sig_log_coeff,batc
     opt_question = batch[min_index]
     
     return opt_question
-    
 
 
-# In[24]:
-
-
-#THIS WILL NEED TO BE MOVED OR DELETED!!!
-#An example of rollout_with_batch_design_acquisition, we also look at the one-step lookahead case:
-
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-
-#rollacq_num_attr = 6
-#rollacq_roll_len = 2
-#rollacq_MC_budget = 50
-#rollacq_batch_size = 4
-#mu_naught = np.array([0.0,0.0,-2.0,3.0,8.0,0.0])#rng.uniform(low = -1.0, high = 1.0, size = rollacq_num_attr)
-#Sig_naught = np.identity(rollacq_num_attr)#sklearn.datasets.make_spd_matrix(rollacq_num_attr)#
-
-#Sig_naught = np.diag([4.0,4.0,0.25,0.25,0.25,4.0])
-#rho = 0.1
-#for i in range(rollacq_num_attr):
-    #if i==0:
-        #Sig_naught[i,0] = 1.0
-        #Sig_naught[i,1] = rho
-    #if i == rollacq_num_attr-1:
-        #Sig_naught[i,rollacq_num_attr-1] = 1.0
-        #Sig_naught[i,rollacq_num_attr-2] = rho 
-    #if i>0 and i<(rollacq_num_attr-1):
-        #for j in range(i-1,i+2):
-            #Sig_naught[i,j] = rho**abs(i-j)
-
-#Sig_naught = np.zeros([rollacq_num_attr,rollacq_num_attr])
-#for i in range(rollacq_num_attr):
-    #for j in range(rollacq_num_attr):
-        #Sig_naught[i,j] = rho**abs(i-j)
-
-#print(mu_naught)
-#print(Sig_naught)
-#rollout_opt = rollout_with_batch_design_acquisition(mu_naught,Sig_naught,mu_log_coeff_6,Sig_log_coeff_6,rollacq_batch_size,
-                                           #rollacq_roll_len,rollacq_MC_budget,include_one_step = True,penalty_term = 0.1)
-#onestep_opt = g_opt(mu_naught,Sig_naught,mu_log_coeff_6,Sig_log_coeff_6)[1:]
-
-#print('rollout_opt: ' + str(rollout_opt))
-#print('onestep_opt: ' + str(onestep_opt))
-#print('rollout_value of rollout solution: ' + str(rollout(mu_naught,
-                                                         #Sig_naught,
-                                                         #rollout_opt[0],
-                                                         #rollout_opt[1],
-                                                         #rollacq_roll_len,
-                                                         #mu_log_coeff_6,
-                                                         #Sig_log_coeff_6)))
-#print('rollout_value of onestep solution: ' + str(rollout(mu_naught,
-                                                         #Sig_naught,
-                                                         #onestep_opt[0],
-                                                         #onestep_opt[1],
-                                                         #rollacq_roll_len,
-                                                         #mu_log_coeff_6,
-                                                         #Sig_log_coeff_6)))
-
-#[mu_update_roll,Sig_update_roll] = moment_matching_update(rollout_opt[0],rollout_opt[1],mu_naught,Sig_naught)
-#[mu_update_onestep,Sig_update_onestep] = moment_matching_update(onestep_opt[0],onestep_opt[1],mu_naught,Sig_naught)
-
-#print('Determinant of Sig_update_roll: ' + str(np.linalg.det(Sig_update_roll)))
-#print('Determinant of Sig_update_onestep: ' + str(np.linalg.det(Sig_update_onestep)))
-
-#print('Sig_update_roll: ' + str(Sig_update_roll))
-#print('Sig_update_onestep: ' + str(Sig_update_onestep))
-#print('mu_update_roll: ' + str(mu_update_roll))
-#print('mu_update_onestep: ' + str(mu_update_onestep))
-
-
-# In[25]:
-
-
-#THIS MAY JUST BE DELETED!!!
-#Second Rollout iteration
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-
-#rollacq_num_attr = 6
-#rollacq_roll_len_1 = 2
-#rollacq_MC_budget = 50 #NOT NEEDED since we are only doing 4 lookahead
-#rollacq_batch_size = 4
-#mu_roll_1 = mu_update_roll#rng.uniform(low = -1.0, high = 1.0, size = rollacq_num_attr)
-#Sig_roll_1 = Sig_update_roll#sklearn.datasets.make_spd_matrix(rollacq_num_attr)#
-
-#rollout_opt_1 = rollout_with_batch_design_acquisition(mu_roll_1,Sig_roll_1,mu_log_coeff_6,Sig_log_coeff_6,rollacq_batch_size,
-                                           #rollacq_roll_len_1,rollacq_MC_budget,include_one_step = True)
-
-#print('rollout_opt_1: ' + str(rollout_opt_1))
-
-#[mu_roll_2,Sig_roll_2] = moment_matching_update(rollout_opt_1[0],rollout_opt_1[1],mu_roll_1,Sig_roll_1)
-
-#print('Determinant of Sig_roll_2: ' + str(np.linalg.det(Sig_roll_2)))
-
-#print('Sig_roll_2: ' + str(Sig_roll_2))
-#print('mu_roll_2: ' + str(mu_roll_2))
-
-
-# In[26]:
-
-
-#THIS MAY NEED TO BE DELETED!!!
-#Second onestep iteration
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-
-
-#mu_onestep_1 = mu_update_onestep#rng.uniform(low = -1.0, high = 1.0, size = rollacq_num_attr)
-#Sig_onestep_1 = Sig_update_onestep#sklearn.datasets.make_spd_matrix(rollacq_num_attr)#
-
-#onestep_opt_1 = g_opt(mu_onestep_1,Sig_onestep_1,mu_log_coeff_6,Sig_log_coeff_6)[1:]
-
-
-#print('onestep_opt_1: ' + str(onestep_opt_1))
-
-#[mu_onestep_2,Sig_onestep_2] = moment_matching_update(onestep_opt_1[0],onestep_opt_1[1],mu_onestep_1,Sig_onestep_1)
-
-#print('Determinant of Sig_onestep_2: ' + str(np.linalg.det(Sig_onestep_2)))
-
-#print('Sig_onestep_2: ' + str(Sig_onestep_2))
-#print('mu_onestep_2: ' + str(mu_onestep_2))
-
-
-# In[27]:
 
 
 def coordinate_exchange_acq(mu,Sig,mu_log_coeff,Sig_log_coeff,batch_size,rollout_length,MC_budget,rel_gap_threshold,
@@ -1090,62 +753,3 @@ def coordinate_exchange_acq(mu,Sig,mu_log_coeff,Sig_log_coeff,batch_size,rollout
     rollout_coordinate_opt_question = final_set_of_questions[min_index]
     
     return rollout_coordinate_opt_question
-
-
-# In[28]:
-
-
-#THIS WILL NEED TO BE MOVED!!!
-#Example for coordinate_exchange
-#rng = np.random.default_rng(100) 
-#np.random.seed(100)
-
-#coord_mu = np.array(12*[1.0])#rng.uniform(low = -1.0, high = 1.0, size = 12)#np.array(6*[1.0])#np.array([1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0])#np.array([-0.25,0.5,-0.75,1.0,-1.25,1.5]) 
-#coord_Sig = np.identity(12)#sklearn.datasets.make_spd_matrix(12)#np.identity(6)##np.identity(12)#1.25*np.array([[1.0,-0.5,0.25,-0.125,0.0625,-0.03125],
-                      #[-0.5,1.0,-0.5,0.25,-0.125,0.0625],
-                     #[0.25,-0.5,1.0,-0.5,0.25,-0.125],
-                     #[-0.125,0.25,-0.5,1.0,-0.5,0.25],
-                     #[0.0625,-0.125,0.25,-0.5,1.0,-0.5],
-                     #[-0.03125,0.0625,-0.125,0.25,-0.5,1.0]])       #np.diag([2.0,0.5,1.0,1.0,1.0,1.0])
-                    #np.diag([1.25,0.8,1.5,0.3333,2,0.5])
-#print(coord_mu,coord_Sig)
-#coord_batch_size = 0
-#coord_roll_len = 3
-#coord_MC_budget = 0#50
-#coord_rel_gap = 0.0001
-#start_time = time.perf_counter()
-#print(coordinate_exchange_acq(coord_mu,coord_Sig,mu_log_coeff_12,Sig_log_coeff_12,coord_batch_size,coord_roll_len,
-                             #coord_MC_budget,coord_rel_gap,include_batch = False))
-#print(time.perf_counter() - start_time, "seconds")
-
-
-# In[29]:
-
-
-#THIS WILL NEED TO BE MOVED OR DELETED!!!
-#Example for batch
-#rng = np.random.default_rng(99) 
-#np.random.seed(99)
-
-#batch_mu = np.array([1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0])#np.array([-0.25,0.5,-0.75,1.0,-1.25,1.5])#np.array([1.0,1.0,1.0,1.0,1.0,1.0])# #rng.uniform(low = -1.0, high = 1.0, size = 6)
-#batch_Sig = np.identity(12)#1.25*np.array([[1.0,-0.5,0.25,-0.125,0.0625,-0.03125],
-                        #[-0.5,1.0,-0.5,0.25,-0.125,0.0625],
-                     #[0.25,-0.5,1.0,-0.5,0.25,-0.125],
-                     #[-0.125,0.25,-0.5,1.0,-0.5,0.25],
-                     #[0.0625,-0.125,0.25,-0.5,1.0,-0.5],
-                     #[-0.03125,0.0625,-0.125,0.25,-0.5,1.0]])  
-                    #np.identity(6)#  #sklearn.datasets.make_spd_matrix(6)#np.diag([2.0,0.5,1.0,1.0,1.0,1.0])
-                    #np.diag([1.25,0.8,1.5,0.3333,2,0.5])
-#print(batch_mu,batch_Sig)
-
-#roll_batch_size = 4
-
-#batch_roll_len = 3
-
-#batch_roll_MC_budget = 0#50
-
-#start_time_batch = time.perf_counter()
-#print(rollout_with_batch_design_acquisition(batch_mu,batch_Sig,mu_log_coeff_12,Sig_log_coeff_12,roll_batch_size,
-                                           #batch_roll_len,batch_roll_MC_budget,include_one_step = True,penalty_term = 10))
-#print(time.perf_counter() - start_time_batch, "seconds")
-
