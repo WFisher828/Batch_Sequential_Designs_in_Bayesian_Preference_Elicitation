@@ -165,8 +165,19 @@ def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     #AO/||s*Sig||
     #(l,s) are scaling parameters for mu and Sig that divide the space into different signal-to-noise ratio regions.
     #t_lim: this is the max amount of time we want to take to construct the batch
-    
-    #This is the number of attributes for the products
+
+    #Make sure that quest_orth_log_coeff is greater or equal to zero. Otherwise, we will
+    #have an unbounded optimization problem. In most situations, the fitting procedure
+    #will result in a positive value for quest_orth_log_coeff, but very rarely the fitting
+    #procedure will give a statistically non-significant but negative value for
+    #quest_orth_log_coeff that makes the optimization problem bounded. When the quest_orth_log_coeff
+    #is less than 0, we decide to set it equal to 0. This will result in a bounded optimization problem,
+    #but the quality of the solution in terms of D-error may not be sufficient because we are no
+    #longer controlling orthogonality in the objective function.
+    if quest_orth_log_coeff<0.0:
+        quest_orth_log_coeff = 0.0
+
+    # This is the number of attributes for the products
     n = len(Sig[0])
     
     m = gp.Model("mip1")
@@ -253,7 +264,18 @@ def batch_design_MO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     #MO/||s*Sig||
     #(l,s) are scaling parameters for mu and Sig that divide the space into different signal-to-noise ratio regions.
     #t_lim: this is the max amount of time we want to take to construct the batch
-    
+
+    # Make sure that quest_orth_log_coeff is greater or equal to zero. Otherwise, we will
+    # have an unbounded optimization problem. In most situations, the fitting procedure
+    # will result in a positive value for quest_orth_log_coeff, but very rarely the fitting
+    # procedure will give a statistically non-significant but negative value for
+    # quest_orth_log_coeff that makes the optimization problem bounded. When the quest_orth_log_coeff
+    # is less than 0, we decide to set it equal to 0. This will result in a bounded optimization problem,
+    # but the quality of the solution in terms of D-error may not be sufficient because we are no
+    # longer controlling orthogonality in the objective function.
+    if quest_orth_log_coeff < 0.0:
+        quest_orth_log_coeff = 0.0
+
     #This is the number of attributes for the products
     n = len(Sig[0])
     
