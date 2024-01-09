@@ -99,6 +99,7 @@ def batch_design_delta_penalty(mu,Sig,batch_size,mu_log_coeff,Sig_log_coeff,M=10
     #Sig_log_coeff: the estimated coefficient c_2 that goes with v in the linear model log(g) = c_1m + c_2*v
     #M: this is a parameter which will be used as a constant to penalize the orthogonality constraint term delta.
     #t_lim: a time limit on the running time of the optimization procedure. Not sure if t=100 is sufficient at the moment.
+   
     
     #This is the number of attributes for the products
     n = len(Sig[0])
@@ -149,7 +150,7 @@ def batch_design_delta_penalty(mu,Sig,batch_size,mu_log_coeff,Sig_log_coeff,M=10
 #the square. We also normalize mu and Sig in the objective so that we do not need to keep on refitting the parameters 
 #that go with question mean, question variance, and question orthogonality.
 
-def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,quest_orth_log_coeff,t_lim = 100):
+def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,quest_orth_log_coeff,t_lim = 100,logfile=False):
     #mu: expectation of prior on beta
     #Sig: Covariance matrix of prior on beta
     #batch_size: the number of questions we want to return in our batch design. This should be less or equal to the number
@@ -165,6 +166,7 @@ def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     #AO/||s*Sig||
     #(l,s) are scaling parameters for mu and Sig that divide the space into different signal-to-noise ratio regions.
     #t_lim: this is the max amount of time we want to take to construct the batch
+    #logfile: determine whether to print out a logfile of the optimization procedure.
 
     #Make sure that quest_orth_log_coeff is greater or equal to zero. Otherwise, we will
     #have an unbounded optimization problem. In most situations, the fitting procedure
@@ -182,6 +184,9 @@ def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     
     m = gp.Model("mip1")
     m.setParam('Timelimit',t_lim)
+    if logfile:
+        m.setParam('LogFile',"Batch_AO_batchsize"+str(batch_size)+"_meancoeff_"+str(quest_mean_log_coeff)+"_varcoeff_"+
+               str(quest_var_log_coeff)+"_orthcoeff_"+str(quest_orth_log_coeff)+"_v5.txt")
     
     #calculate 2-norms of mu and Sigma
     mu_2norm = np.linalg.norm(mu,2)
@@ -248,7 +253,7 @@ def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
 #the square. We also normalize mu and Sig in the objective so that we do not need to keep on refitting the parameters 
 #that go with question mean, question variance, and question orthogonality.
 
-def batch_design_MO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,quest_orth_log_coeff,t_lim = 100):
+def batch_design_MO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,quest_orth_log_coeff,t_lim = 100,logfile=False):
     #mu: expectation of prior on beta
     #Sig: Covariance matrix of prior on beta
     #batch_size: the number of questions we want to return in our batch design. This should be less or equal to the number
@@ -281,6 +286,9 @@ def batch_design_MO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     
     m = gp.Model("mip1")
     m.setParam('Timelimit',t_lim)
+    if logfile:
+        m.setParam('LogFile',"Batch_MO_batchsize"+str(batch_size)+"_meancoeff_"+str(quest_mean_log_coeff)+"_varcoeff_"+
+               str(quest_var_log_coeff)+"_orthcoeff_"+str(quest_orth_log_coeff)+"_v5.txt")
     
     #calculate 2-norms of mu and Sigma
     mu_2norm = np.linalg.norm(mu,2)
