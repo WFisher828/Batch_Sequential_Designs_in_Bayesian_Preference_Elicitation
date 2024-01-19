@@ -193,21 +193,29 @@ def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     Sig_2norm = np.linalg.norm(Sig,2)
     
     #List of tuples for delta variable
-    delta_tuples = []
-    for i in range(batch_size):
-        for j in range(i+1,batch_size):
-            delta_tuples.append((i,j))
+    if batch_size > 1:
+        delta_tuples = []
+        for i in range(batch_size):
+            for j in range(i+1,batch_size):
+                delta_tuples.append((i,j))
     
     #Set up the x_i and y_i, i = 1,...,batchsize
     X = m.addMVar((batch_size,n),vtype = GRB.BINARY)
     Y = m.addMVar((batch_size,n),vtype = GRB.BINARY)
-    Delta = m.addVars(delta_tuples, lb=0.0, vtype = GRB.CONTINUOUS)
+    if batch_size > 1:
+        Delta = m.addVars(delta_tuples, lb=0.0, vtype = GRB.CONTINUOUS)
     
     #Set up the objective function.
-    m.setObjective((quest_mean_log_coeff/(batch_size*mu_2norm))*sum([mu@X[i] - mu@Y[i] for i in range(batch_size)]) + 
-                   (quest_var_log_coeff/(batch_size*Sig_2norm))*sum([X[i]@Sig@X[i] - X[i]@(2.0*Sig)@Y[i] + 
-                   Y[i]@Sig@Y[i] for i in range(batch_size)]) + 
-                   (quest_orth_log_coeff/(batch_size*(batch_size-1)*Sig_2norm/2))*sum([Delta[i,j] for i in range(batch_size) for j in range(i+1,batch_size)]),GRB.MINIMIZE)
+    if batch_size > 1:
+        m.setObjective((quest_mean_log_coeff/(batch_size*mu_2norm))*sum([mu@X[i] - mu@Y[i] for i in range(batch_size)]) + 
+                       (quest_var_log_coeff/(batch_size*Sig_2norm))*sum([X[i]@Sig@X[i] - X[i]@(2.0*Sig)@Y[i] + 
+                       Y[i]@Sig@Y[i] for i in range(batch_size)]) + 
+                           (quest_orth_log_coeff/(batch_size*(batch_size-1)*Sig_2norm/2))*sum([Delta[i,j] for i in range(batch_size) for j in range(i+1,batch_size)]),GRB.MINIMIZE)
+        
+    if batch_size == 1:
+        m.setObjective((quest_mean_log_coeff/(batch_size*mu_2norm))*sum([mu@X[i] - mu@Y[i] for i in range(batch_size)]) + 
+                       (quest_var_log_coeff/(batch_size*Sig_2norm))*sum([X[i]@Sig@X[i] - X[i]@(2.0*Sig)@Y[i] + 
+                       Y[i]@Sig@Y[i] for i in range(batch_size)]),GRB.MINIMIZE)
     
     #Set up the constraints that force the products in question i to be different, as well as forcing the symmetry
     #exploitation condition.
@@ -297,12 +305,19 @@ def batch_design_MO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     #Set up the x_i and y_i, i = 1,...,batchsize
     X = m.addMVar((batch_size,n),vtype = GRB.BINARY)
     Y = m.addMVar((batch_size,n),vtype = GRB.BINARY)
-    delta = m.addVar(lb=0.0, vtype = GRB.CONTINUOUS)
+    if batch_size > 1:
+        delta = m.addVar(lb=0.0, vtype = GRB.CONTINUOUS)
     
     #set up the objective function
-    m.setObjective((quest_mean_log_coeff/(batch_size*mu_2norm))*sum([mu@X[i] - mu@Y[i] for i in range(batch_size)]) +
-                  (quest_var_log_coeff/(batch_size*Sig_2norm))*sum([X[i]@Sig@X[i] - X[i]@(2.0*Sig)@Y[i] + 
-                   Y[i]@Sig@Y[i] for i in range(batch_size)]) + (quest_orth_log_coeff/Sig_2norm)*delta,GRB.MINIMIZE)
+    if batch_size > 1:
+        m.setObjective((quest_mean_log_coeff/(batch_size*mu_2norm))*sum([mu@X[i] - mu@Y[i] for i in range(batch_size)]) +
+                      (quest_var_log_coeff/(batch_size*Sig_2norm))*sum([X[i]@Sig@X[i] - X[i]@(2.0*Sig)@Y[i] + 
+                       Y[i]@Sig@Y[i] for i in range(batch_size)]) + (quest_orth_log_coeff/Sig_2norm)*delta,GRB.MINIMIZE)
+    
+    if batch_size == 1:
+         m.setObjective((quest_mean_log_coeff/(batch_size*mu_2norm))*sum([mu@X[i] - mu@Y[i] for i in range(batch_size)]) +
+                      (quest_var_log_coeff/(batch_size*Sig_2norm))*sum([X[i]@Sig@X[i] - X[i]@(2.0*Sig)@Y[i] + 
+                       Y[i]@Sig@Y[i] for i in range(batch_size)]),GRB.MINIMIZE)
     
     #Set up the constraints that force the products in question i to be different, as well as forcing the symmetry
     #exploitation condition.
