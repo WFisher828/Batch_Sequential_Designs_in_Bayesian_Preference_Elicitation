@@ -6,7 +6,7 @@ A collection of code for the paper "Batch Sequential Designs in Bayesian Prefere
 
 Priority of tasks is denoted by the point number (1 has more priority than 2, etc.). Tasks will be updated when new problems are identified.
 
-**1**(Reorganize): We need to consolidate helper functions so that there are less files in the function
+**1**(Reorganize): We need to consolidate helper functions so that there are less files.
 
 **2**(Helper Functions Examples): Write examples for helper functions.
 
