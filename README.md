@@ -3,19 +3,22 @@ A collection of code for the paper "Batch Sequential Designs in Bayesian Prefere
 
 -----
 **!!!TO DO LIST!!!**: <br />
-(Batch) - Task relating to the Batch-Design project. <br />
 
 Priority of tasks is denoted by the point number (1 has more priority than 2, etc.). Tasks will be updated when new problems are identified.
 
 **1**(Helper Functions Examples): Write examples for helper functions.
 
-**2**(Detailed Comments): Provide more detailed comments for the functions in each of the modules, describing in detail the purpose and use of the function. Comments regarding the definition of arguments in the function should include the exact data-type expected, along with any restrictions on the input (later on we may consider adding code into the functions to make sure the user is not inputting invalid arguments). Examples of functions should be provided in a separate file so that users can observe how the functions work, and what their output looks like. Write a brief users manual of the functions within the modules.
+**2**(Reproducibility): We will check that the code works in an environment other than Jupyter Notebook. We will rerun the experiment files as well to check that everything is running correctly.
 
-**3**(Overview Files): Experiment files should not only have comments in the code myopically explaining the purpose of certain lines, but there should also be a file or introduction which describes the purpose and details of the experiment.
+**3**(Detailed Comments): Provide more detailed comments for the functions in each of the modules, describing in detail the purpose and use of the function. Comments regarding the definition of arguments in the function should include the exact data-type expected, along with any restrictions on the input (later on we may consider adding code into the functions to make sure the user is not inputting invalid arguments). Examples of functions should be provided in a separate file so that users can observe how the functions work, and what their output looks like. Write a brief users manual of the functions within the modules.
 
-**4**(Look for Bugs): After or along the way of completing points (1)-(7), we will recheck the code for any mistakes/bugs.
+**4**(Overview Files): Experiment files should not only have comments in the code myopically explaining the purpose of certain lines, but there should also be a file or introduction which describes the purpose and details of the experiment.
 
-**5**(Reproducibility): We will check that the code works in an environment other than Jupyter Notebook. We will rerun the experiment files as well to check that everything is running correctly.
+**5**(File formatting): Data saved to files should be formatted in a neat, easy-to-read manner.
+
+**6**(Look for Bugs): After or along the way of completing points (1)-(7), we will recheck the code for any mistakes/bugs.
+
+**7**(Renaming): We will rename certain functions/variables to reflect names given in the paper.
 
 -----
 
