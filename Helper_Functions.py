@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 
 import numpy as np
 import scipy.integrate
@@ -12,8 +10,6 @@ from gurobipy import GRB
 import itertools
 import random
 
-
-# In[2]:
 
 
 #Compute expectation and variance of Z random variable parameterized by m and v
@@ -38,9 +34,6 @@ def z_expectation_variance(m,v):
     var_z = (scipy.integrate.quad(fun3, -integ_bound, integ_bound)[0] / C) - mu_z**2
     
     return [mu_z, var_z]
-
-
-# In[3]:
 
 
 def moment_matching_update(x,y,mu_prior,Sig_prior):
@@ -73,9 +66,6 @@ def moment_matching_update(x,y,mu_prior,Sig_prior):
     return mu_posterior, Sig_posterior
 
 
-# In[4]:
-
-
 #Define a set that has all the differences between binary products
 
 def product_diff_list(n):
@@ -100,9 +90,6 @@ def product_diff_list(n):
     return p_d_l
 
 
-# In[5]:
-
-
 #Given a trinary vector of 0, 1, and -1, find two binary products whose difference is the trinary vector.
 def question_extractor(prod):
     #prod: This is a trinary vector of 0, 1, and -1 that represents the difference between two products, which
@@ -121,9 +108,6 @@ def question_extractor(prod):
             x[i] = 0.0
             y[i] = 1.0
     return x,y
-
-
-# In[6]:
 
 
 #This function is used to generate data to estimate the parameters in the normalized AO model. The normalized AO model
@@ -270,8 +254,6 @@ def norm_AO_MO_data_generation(init_mu, init_Sig, batch_size, L, S, num_random_b
     return average_orthogonality, maximum_orthogonality, average_question_mean, average_question_variance, L_mu, S_Sig, init_sqrt_determinant, average_d_error
 
 
-# In[7]:
-
 
 #This function constructs a batch design based off of average question mean, average question variance, and average
 #question orthogonality. For the average question orthogonality, we take the absolute value of the summands rather than
@@ -383,8 +365,6 @@ def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
         
     return[Q,D]
 
-
-# In[8]:
 
 
 #This function constructs a batch design based off of average question mean, average question variance, and MAXIMUM
