@@ -1,37 +1,21 @@
-# Preference_Learning_Project
-A collection of code for the Bayesian preference learning project 
+# Batch_Sequential_Designs_in_Bayesian_Preference_Elicitation
+A collection of code for the paper "Batch Sequential Designs in Bayesian Preference Elicitation with Application to Tradespace Exploration for Vehicle Concept Design" 
 
 -----
 **!!!TO DO LIST!!!**: <br />
 (Batch) - Task relating to the Batch-Design project. <br />
-(Non-myopic) - Task relating the non-myopic portion of the project. <br />
-(Batch/Non-myopic) - Tasks relating to both batch-design and non-myopic portion of the project. <br />
 
-Priority of tasks is denoted by the point number (1 has more priority than 2, etc.). We will also put more priority into tasks relating to the batch-design project, as the 
-results there seem to have a better chance of publishing. The non-myopic portion of the project seems like it will be used in the VIPR-GS report, but may not be publishable at the moment. Tasks will be updated when new problems are identified.
+Priority of tasks is denoted by the point number (1 has more priority than 2, etc.). Tasks will be updated when new problems are identified.
 
-**1.0**(Helper Functions): Need to take helper functions and convert them into python files.
+**1**(Helper Functions Examples): Write examples for helper functions.
 
-**1.1**(Batch/Non-myopic): Need to work on DEPENDENCIES between files: "Baseline_Functions_Definitions", "Questionnaire_Procedure", "Experiment_Framework", "Batch_Design_and_Rollout".
-These files contain functions which are used throughout our numerical experiments. Specifically, get rid of "sys.path.append(r'C:\Users\wsfishe\Desktop\PreferenceElicitationCode')" (It seems to import your own modules in Jupyter Notebook you need to save the modules on your own device and import them in using sys.path.append) in file "Batch_Design_and_Rollout", "Experiment_Framework", "Questionnaire_Procedure".
+**2**(Detailed Comments): Provide more detailed comments for the functions in each of the modules, describing in detail the purpose and use of the function. Comments regarding the definition of arguments in the function should include the exact data-type expected, along with any restrictions on the input (later on we may consider adding code into the functions to make sure the user is not inputting invalid arguments). Examples of functions should be provided in a separate file so that users can observe how the functions work, and what their output looks like. Write a brief users manual of the functions within the modules.
 
-**1.2**(Helper Functions): Remove examples from inside the Modules containing helper functions. Place those in separate files.
+**3**(Overview Files): Experiment files should not only have comments in the code myopically explaining the purpose of certain lines, but there should also be a file or introduction which describes the purpose and details of the experiment.
 
-**2**(Batch/Non-myopic): Identify major experiments (experiments included in the paper) performed for the Batch-Design paper, "Batch Sequential Designs in Bayesian Preference Elicitation with Application to Tradespace Exploration for Vehicle Concept Design", as well as major experiments conducted in the portion of the project where we investigated non-myopic methods. The Jupyter-Notebook files for these experiments directly contain each required function from the main modules ("Baseline_Functions_Definitions", "Questionnaire_Procedure", "Experiment_Framework", "Batch_Design_and_Rollout") at the beginning of the file before the experiment begins. For readability and brevity of the experiment file, we will want to IMPORT the required functions for each experiment from the corresponding modules, rather than directly containing the required functions within the file. Include these experiments as separate files.
+**4**(Look for Bugs): After or along the way of completing points (1)-(7), we will recheck the code for any mistakes/bugs.
 
-**3**(Batch/Non-myopic): For each of the major experiments found in point (2), check whether there are functions in these experiment files which can be placed within one of the four major modules in point (1).
-
-**4**(Non-myopic): One experiment for the non-myopic project (sequential comparison of one-step, two-step via enumeration, rollout over batch, and rollout via coordinate exchange with 100 partworths) did not include gumbel error terms in the selection process. We need to fix this so that gumbel error terms are included.
-
-**5**(Batch/Non-myopic): Provide more detailed comments for the functions in each of the modules, describing in detail the purpose and use of the function. Comments regarding the definition of arguments in the function should include the exact data-type expected, along with any restrictions on the input (later on we may consider adding code into the functions to make sure the user is not inputting invalid arguments). Examples of functions should be provided in a separate file so that users can observe how the functions work, and what their output looks like. Write a brief users manual of the functions within the modules.
-
-**6**(Batch/Non-myopic): Experiment files should not only have comments in the code myopically explaining the purpose of certain lines, but there should also be a file or introduction which describes the purpose and details of the experiment.
-
-**7**(Batch/Non-myopic): Experiment files should be separate from plotting files. We will clearly denote which plotting file corresponds to which experiment file. We will provide detailed comments on how to take data from the experiment file and use it to generate plots/results in the plotting file.
-
-**8**(Batch/Non-myopic): After or along the way of completing points (1)-(7), we will recheck the code for any mistakes/bugs.
-
-**9**(Batch/Non-myopic): We will check that the code works in an environment other than Jupyter Notebook. We will run examples in point (5) and also rerun the experiment files as well to check that everything is running correctly.
+**5**(Reproducibility): We will check that the code works in an environment other than Jupyter Notebook. We will rerun the experiment files as well to check that everything is running correctly.
 
 -----
 
