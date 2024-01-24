@@ -2,11 +2,16 @@
 A collection of code for the paper "Batch Sequential Designs in Bayesian Preference Elicitation with Application to Tradespace Exploration for Vehicle Concept Design" 
 
 -----
-**Project Overview and Description of Files.**
-Helper_Functions.py: This is a Python file which contains functions that are used in both the experiment corresponding to the section "Questionnaire Simulation" in the main paper as well as the experiment corresponding to the section "Quality of MIP-Based Batch Design Solutions" found in the supplementary material document. This Python file contains the following functions:
-\begin{itemize}
+**Project Overview and Description of Files.** <br />
 
-\end{itemize}
+Helper_Functions.py: This is a Python file which contains functions that are used in both the experiment corresponding to the section "Questionnaire Simulation" in the main paper as well as the experiment corresponding to the section "Quality of MIP-Based Batch Design Solutions" found in the supplementary material document. This Python file contains the following functions:
+* z_expectation_variance
+* moment_matching_update
+* product_diff_list
+* question_extractor
+* norm_AO_MO_data_generation
+* batch_design_AO
+* batch_design_MO
 
 -----
 **To Do List**: <br />
