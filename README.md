@@ -3,6 +3,8 @@ A collection of code for the paper "Batch Sequential Designs in Bayesian Prefere
 
 -----
 **Project Overview and Description of Files.**
+Helper_Functions.py: This is a Python file which contains functions that are used in both the experiment corresponding to the section "Questionnaire Simulation" in the main paper as well as the experiment corresponding to the section "Quality of MIP-Based Batch Design Solutions" found in the supplementary material document. This Python file contains the following functions:
+$A$
 
 -----
 **!!!TO DO LIST!!!**: <br />
