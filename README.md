@@ -4,7 +4,7 @@ A collection of code for the paper "Batch Sequential Designs in Bayesian Prefere
 -----
 **Project Overview and Description of Files.** <br />
 
-Helper_Functions.py: This is a Python file which contains functions that are used in both the experiment corresponding to the section "Questionnaire Simulation" in the main paper as well as the experiment corresponding to the section "Quality of MIP-Based Batch Design Solutions" found in the supplementary material document. This Python file contains the following functions:
+<ins>Helper_Functions.py</ins> : This is a Python file which contains functions that are used in both the experiment corresponding to the section "Questionnaire Simulation" in the main paper as well as the experiment corresponding to the section "Quality of MIP-Based Batch Design Solutions" found in the supplementary material document. This Python file contains the following functions:
 * z_expectation_variance
 * moment_matching_update
 * product_diff_list
@@ -13,20 +13,20 @@ Helper_Functions.py: This is a Python file which contains functions that are use
 * batch_design_AO
 * batch_design_MO
 
-MIP_formulation_vs_Enumeration_Experiment_v6.ipynb: This is a Jupyter notebook which is used in conducting the experiment corresponding to the section "Quality of MIP-Based Batch Design Solutions" found in the supplementary material document.
+<ins>MIP_formulation_vs_Enumeration_Experiment_v6.ipynb</ins>: This is a Jupyter notebook which is used in conducting the experiment corresponding to the section "Quality of MIP-Based Batch Design Solutions" found in the supplementary material document.
 
-Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb: This is a Jupyter notebook which is used in conducting the experiment corresponding to the section "Questionnaire Simulation" found in the main paper.
+<ins>Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb</ins>: This is a Jupyter notebook which is used in conducting the experiment corresponding to the section "Questionnaire Simulation" found in the main paper.
 
-JMP_attr_6_exp_1_cov_1_loc_025_scale_4_quest_16.csv: This is a non-adaptive Bayesian D-optimal questionnaire constructed in JMP under the balanced low signal-to-noise ratio setting discussed in the section "Detailed Experiment Setup for Questionnaire Simulation" found in the supplementary material document. This csv file is used in Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb.
+<ins>JMP_attr_6_exp_1_cov_1_loc_025_scale_4_quest_16.csv</ins>: This is a non-adaptive Bayesian D-optimal questionnaire constructed in JMP under the balanced low signal-to-noise ratio setting discussed in the section "Detailed Experiment Setup for Questionnaire Simulation" found in the supplementary material document. This csv file is used in Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb.
 
-JMP_attr_6_exp_1_cov_1_loc_1_scale_1_quest_16.csv: This is a non-adaptive Bayesian D-optimal questionnaire constructed in JMP under the balanced medium signal-to-noise ratio setting discussed in the section "Detailed Experiment Setup for Questionnaire Simulation" found in the supplementary material document. This csv file is used in Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb.
+<ins>JMP_attr_6_exp_1_cov_1_loc_1_scale_1_quest_16.csv</ins>: This is a non-adaptive Bayesian D-optimal questionnaire constructed in JMP under the balanced medium signal-to-noise ratio setting discussed in the section "Detailed Experiment Setup for Questionnaire Simulation" found in the supplementary material document. This csv file is used in Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb.
 
 
-JMP_attr_6_exp_1_cov_1_loc_4_scale_025_quest_16.csv: This is a non-adaptive Bayesian D-optimal questionnaire constructed in JMP under the balanced medium signal-to-noise ratio setting discussed in the section "Detailed Experiment Setup for Questionnaire Simulation" found in the supplementary material document. This csv file is used in Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb.
+<ins>JMP_attr_6_exp_1_cov_1_loc_4_scale_025_quest_16.csv</ins>: This is a non-adaptive Bayesian D-optimal questionnaire constructed in JMP under the balanced medium signal-to-noise ratio setting discussed in the section "Detailed Experiment Setup for Questionnaire Simulation" found in the supplementary material document. This csv file is used in Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb.
 
-parameter_file_AO_MO_JMP_exp.txt: This txt file can be used if the user wishes to run all three of the low, medium, and high signal-to-noise ratio experiment settings in a job array. This file corresponds to the experiment in "Questionnaire Simulation".
+<ins>parameter_file_AO_MO_JMP_exp.txt</ins>: This txt file can be used if the user wishes to run all three of the low, medium, and high signal-to-noise ratio experiment settings in a job array. This file corresponds to the experiment in "Questionnaire Simulation".
 
-parameter_file_MIPvsEnum_v6_exp.txt: This txt file can be used if the user wishes to run all six experiment settings ( (low signal-to-noise, balanced), (medium signal-to-noise, balanced), (high signal-to-noise, balanced),(low signal-to-noise, imbalanced), (medium signal-to-noise, imbalanced), (high signal-to-noise, imbalanced) ) in a job array. This file corresponds to the experiment in "Quality of MIP-Based Batch Design Solutions".
+<ins>parameter_file_MIPvsEnum_v6_exp.txt</ins>: This txt file can be used if the user wishes to run all six experiment settings ( (low signal-to-noise, balanced), (medium signal-to-noise, balanced), (high signal-to-noise, balanced),(low signal-to-noise, imbalanced), (medium signal-to-noise, imbalanced), (high signal-to-noise, imbalanced) ) in a job array. This file corresponds to the experiment in "Quality of MIP-Based Batch Design Solutions".
 
 -----
 **To Do List**: <br />
