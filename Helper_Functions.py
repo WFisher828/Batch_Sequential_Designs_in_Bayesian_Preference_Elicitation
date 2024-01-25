@@ -79,9 +79,9 @@ def product_diff_list(n):
     zero_index = p_d_l.index(tuple([0]*n))
 
     #Note that at this point, product_diff_list contains some redundant information. Due to
-    #the symmetry of the one-step and two-step acquisition function in terms of question mean, question pairs such as 
-    #(-1,-1,-1,...,-1) and (1,1,1,...,1) (i.e. negative multiples) will evaluate as the same under the one-step and two-step
-    #acquisition functions. Due to the structure of product_diff_list, we can remove every question pair before and including
+    #the symmetry of the one-step function in terms of question mean, question pairs such as 
+    #(-1,-1,-1,...,-1) and (1,1,1,...,1) (i.e. negative multiples) will evaluate as the same under the one-step
+    #acquisition function. Due to the structure of product_diff_list, we can remove every question pair before and including
     #the question pair with all zero entries in order to remove this redundant information.
     for i in range(0,zero_index + 1):
         p_d_l.pop(0)
