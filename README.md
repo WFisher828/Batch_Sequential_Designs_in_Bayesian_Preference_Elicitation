@@ -2,8 +2,8 @@
 A collection of code for the experiments ran in "Batch Sequential Designs in Bayesian Preference Elicitation with Application to Tradespace Exploration for Vehicle Concept Design".
 
 -----
-**Project Overview and Description of Files.** <br />
-
+**Description of Files.** <br />
+------
 <ins>Helper_Functions.py</ins> : This is a Python file which contains functions that are used in both the experiment corresponding to Section 4 "Questionnaire Simulation" in the main paper as well as the experiment corresponding to the Section S3 "Quality of MIP-Based Batch Design Solutions" found in the supplementary material document. This Python file contains the following functions:
 * z_expectation_variance: This function is used for calculating the expectation and variance of the random variable $Z(m,\sigma)$ defined in Section 2.2 proposition 1 of the main paper. 
 * moment_matching_update: This function is used for performing a moment matching approximation of the posterior distribution of a DM's partworth given an answer to a single query (x,y) and that the partworth's prior distribution is normal. The moment matching updating equations are given in Section 2.2 proposition 1 of the main paper.
