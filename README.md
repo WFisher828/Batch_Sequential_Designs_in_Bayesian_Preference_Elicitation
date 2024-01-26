@@ -37,7 +37,7 @@ Next, the python file "Helper_Functions.py", which contains functions used in bo
 
 Now, we will give directions for running each of the experiments.
 
-<ins>Questionnaire Simulation</ins>: The notebook corresponding to this experiment is Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb. This experiment has three settings, which are the low, medium, and high signal-to-noise ratio settings. In order to run each of the three settings, one will download the Jupter notebook and proceed to the 4th cell where they will see:
+<ins>Questionnaire Simulation</ins>: The notebook corresponding to this experiment is Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb. This experiment has three settings, which are the low, medium, and high signal-to-noise ratio settings. In order to run each of the three settings, one will download the Jupyter notebook and proceed to the 4th cell where they will see:
 
 ```python
 #signal to noise ratio. 
@@ -46,7 +46,9 @@ Now, we will give directions for running each of the experiments.
 #3 - HIGH: multiply expectation by 4.0 and covariance by 0.25
 snr = int(sys.argv[1]) 
 ```
+Now, to run the experiment directly in the notebook, one will comment-out/delete "int(sys.argv\[1\])" and replace it with 1 (integer, not string!) for the low SNR setting, 2 for the medium SNR setting, and 3 for the high SNR setting. 
 
+If one has access to a computing cluster, they may download the notebook as a python file and write a Bash script to run all three experiment settings as a Batch job array, using parameter_file_AO_MO_JMP_exp.txt as the inputs.
 
 **To Do List**: <br />
 --------
