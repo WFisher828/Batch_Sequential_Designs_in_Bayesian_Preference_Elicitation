@@ -1,9 +1,10 @@
 # Batch_Sequential_Designs_in_Bayesian_Preference_Elicitation
 A collection of code for the experiments ran in "Batch Sequential Designs in Bayesian Preference Elicitation with Application to Tradespace Exploration for Vehicle Concept Design".
 
------
+
 **Description of Files.** <br />
 ------
+
 <ins>Helper_Functions.py</ins> : This is a Python file which contains functions that are used in both the experiment corresponding to Section 4 "Questionnaire Simulation" in the main paper as well as the experiment corresponding to the Section S3 "Quality of MIP-Based Batch Design Solutions" found in the supplementary material document. This Python file contains the following functions:
 * z_expectation_variance: This function is used for calculating the expectation and variance of the random variable $Z(m,\sigma)$ defined in Section 2.2 proposition 1 of the main paper. 
 * moment_matching_update: This function is used for performing a moment matching approximation of the posterior distribution of a DM's partworth given an answer to a single query (x,y) and that the partworth's prior distribution is normal. The moment matching updating equations are given in Section 2.2 proposition 1 of the main paper.
@@ -27,8 +28,28 @@ A collection of code for the experiments ran in "Batch Sequential Designs in Bay
 
 <ins>parameter_file_MIPvsEnum_v6_exp.txt</ins>: This file corresponds to the experiment in "Quality of MIP-Based Batch Design Solutions". This txt file can be used if the user wishes to run all six experiment settings ( (low signal-to-noise, balanced), (medium signal-to-noise, balanced), (high signal-to-noise, balanced),(low signal-to-noise, imbalanced), (medium signal-to-noise, imbalanced), (high signal-to-noise, imbalanced) ) in a job array using a Bash script. Column one corresponds to the signal-to-noise setting ("1":low, "2": medium, "3": high) and column two corresponds to the balanced ("1") or imbalanced ("2") setting discussed in Section S3 of the supplementary materials.
 
------
+**Running Experiments**: <br />
+--------
+
+<ins>Required Software</ins>: In order to run the experiments in Section 4 "Questionnaire Simulation" and Section S3 "Quality of MIP-Based Batch Design Solutions", one will need to have installed [Python](https://www.python.org/), [Jupyter Notebook](https://jupyter.org/), and [Gurobi](https://www.gurobi.com/) on their machine. 
+
+Next, the python file "Helper_Functions.py", which contains functions used in both experiments, must be downloaded as the Jupyter Notebook files make calls to these functions.
+
+Now, we will give directions for running each of the experiments.
+
+<ins>Questionnaire Simulation</ins>: The notebook corresponding to this experiment is Comparing_AO_and_MO_numerical_Experiment_ExpIII_v2.ipynb. This experiment has three settings, which are the low, medium, and high signal-to-noise ratio settings. In order to run each of the three settings, one will download the Jupter notebook and proceed to the 4th cell where they will see:
+
+```python
+#signal to noise ratio. 
+#1 - LOW: multiply expectation by 0.25 and covariance by 4.0
+#2 - REG: multiply expectation by 1.0 and covariance by 1.0
+#3 - HIGH: multiply expectation by 4.0 and covariance by 0.25
+snr = int(sys.argv[1]) 
+```
+
+
 **To Do List**: <br />
+--------
 
 Priority of tasks is denoted by the point number (1 has more priority than 2, etc.). Tasks will be updated when new problems are identified.
 
