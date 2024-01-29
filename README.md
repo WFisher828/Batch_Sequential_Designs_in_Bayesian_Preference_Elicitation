@@ -48,7 +48,32 @@ snr = int(sys.argv[1])
 ```
 Now, to run the experiment directly in the notebook, one will comment-out/delete "int(sys.argv\[1\])" and replace it with 1 (integer, not string!) for the low SNR setting, 2 for the medium SNR setting, and 3 for the high SNR setting. 
 
-If one has access to a computing cluster, they may download the notebook as a python file and write a Bash script to run all three experiment settings as a Batch job array, using parameter_file_AO_MO_JMP_exp.txt as the inputs.
+If one has access to a computing cluster, they may download the notebook as a python file and write a Bash script to run all three experiment settings as a batch job array, using parameter_file_AO_MO_JMP_exp.txt as the inputs.
+
+<ins>Quality of MIP-Based Batch Design Solutions.</ins>: The notebook corresponding to this experiment is MIP_formulation_vs_Enumeration_Experiment_v6.ipynb. This experiment has 3x2 settings, which are the combinations of SNR and prior type: (low SNR, balanced prior), (medium SNR, balanced prior), (high SNR, balanced prior), (low SNR, imbalanced prior), (medium SNR, imbalanced prior), and (high SNR, imbalanced prior). In order to run each of the 3x2 settings, one will download the Jupyter notebook and proceed to the 4th cell where the will see:
+
+```python
+#signal to noise ratio. 
+#1 - LOW: multiply expectation by 0.25 and covariance by 4.0
+#2 - REG: multiply expectation by 1.0 and covariance by 1.0
+#3 - HIGH: multiply expectation by 4.0 and covariance by 0.25
+snr = int(sys.argv[1])
+
+
+#Prior type
+#1 - homogeneous expectation and identity covariance matrix
+#2 - heterogeneous expectation and KMS covariance matrix
+prior_type = int(sys.argv[2])
+```
+Now, to run the experiment directly in the notebook, one will comment-out/delete "int(sys.argv\[1\])" and "int(sys.argv\[2\])" and replace them with 
+* 1 (integer) and 1 (integer) for the low SNR, balanced prior regime.
+* 2 and 1 for the medium SNR, balanced prior regime.
+* 3 and 1 for the high SNR, balanced prior regime.
+* 1 and 2 for the low SNR, imbalanced prior regime.
+* 2 and 2 for the medium SNR, imbalanced prior regime.
+* 3 and 2 for the high SNR, imbalanced prior regime.
+
+If one has access to a computing cluster, they may download the notebook as a python file and write a Bash script to run all 3x2 experiment settings as a batch job array, using parameter_file_MIPvsEnum_v6_exp.txt as the inputs.
 
 **To Do List**: <br />
 --------
