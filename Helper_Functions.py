@@ -11,12 +11,11 @@ import itertools
 import random
 
 
-
 #Compute expectation and variance of Z random variable parameterized by m and v
 
 def z_expectation_variance(m,v):
-    #m is question mean
-    #v is question variance
+    #m is question mean. Should be a real number
+    #v is question variance. Should be a real number greater than 0
     
     #MARCH 28 2023: CHANGED TO 35 (from 30) due to some errors in calculation. At integ_bound = 30, there were instances 
     #where variance was calculated to be less than 0. 
@@ -36,9 +35,14 @@ def z_expectation_variance(m,v):
     return [mu_z, var_z]
 
 
+#This function is for conducting moment-matching using the updating equations in proposition 1. This returns the posterior
+#expectation and covariance matrix.
 def moment_matching_update(x,y,mu_prior,Sig_prior):
-    #x and y are a question pair, x is preferred over y.
-    #mu_prior and Sig_prior are expectation and covariance matrix
+    #x and y: These are numpy arrays of binary variables.
+    #mu_prior: prior expectation over the DM's partworth. Should be a numpy array.
+    #Sig_prior: prior covariance matrix over the DM's partworth. Should be a square two-dimensional numpy array
+    #having rows and columns with same number of entries corresponding to mu_prior.
+    
     #Make sure x, y, mu_prior, and Sig_prior are numpy arrays
     x_vec = np.array(x)
     y_vec = np.array(y)
@@ -66,6 +70,7 @@ def moment_matching_update(x,y,mu_prior,Sig_prior):
     return mu_posterior, Sig_posterior
 
 
+
 #Define a set that has all the differences between binary products
 
 def product_diff_list(n):
@@ -79,7 +84,7 @@ def product_diff_list(n):
     zero_index = p_d_l.index(tuple([0]*n))
 
     #Note that at this point, product_diff_list contains some redundant information. Due to
-    #the symmetry of the one-step function in terms of question mean, question pairs such as 
+    #the symmetry of the one-step acquisition function in terms of question mean, question pairs such as 
     #(-1,-1,-1,...,-1) and (1,1,1,...,1) (i.e. negative multiples) will evaluate as the same under the one-step
     #acquisition function. Due to the structure of product_diff_list, we can remove every question pair before and including
     #the question pair with all zero entries in order to remove this redundant information.
@@ -88,6 +93,7 @@ def product_diff_list(n):
     
     p_d_l = [np.array(a) for a in p_d_l]
     return p_d_l
+
 
 
 #Given a trinary vector of 0, 1, and -1, find two binary products whose difference is the trinary vector.
@@ -110,6 +116,7 @@ def question_extractor(prod):
     return x,y
 
 
+
 #This function is used to generate data to estimate the parameters in the normalized AO model. The normalized AO model
 #is given by log(D-err/Det^(1/2)(Sig)) ~ AM/||L*mu|| + AV/||S*Sig|| + AO/||S*Sig|| + ||L*mu|| + ||S*Sig||. AM, AV, and AO denote
 #the average question mean, average quesiton variance, and average question orthogonality of a given design under prior
@@ -122,16 +129,25 @@ def question_extractor(prod):
 #!!! rng will need to be set before calling this function !!!
 
 def norm_AO_MO_data_generation(init_mu, init_Sig, batch_size, L, S, num_random_batches, num_true_partworths):
-    #init_mu: This is the initial expectation of the partworths.
-    #init_Sig: This is the initial covariance matrix of the partworths.
-    #batch_size: This is the number of questions in each batch
+    #init_mu: This is the initial expectation of the partworths. Should be a numpy array.
+    
+    #init_Sig: This is the initial covariance matrix of the partworths. Should be a square two-dimensional numpy array
+    #having rows and columns with same number of entries corresponding to init_mu.
+    
+    #batch_size: This is the number of questions in each batch. Should be an integer greater than or equal to one.
+    
     #L: This is a vector which holds varying levels of signal (multiply with mu). For example,
     #we could have L = [0.25,1.0,4.0]
+    
     #S: This is a vector which holds varying levels of noise (multiply with Sig). For example,
     #we could have S = [0.25,1.0,4.0]
+    
     #num_random_batches: This is the number of random batches that we will generate for collecting data on log(D-err),
-    #AM, AV, and AO (and MO). This set of random batches will be used for each level combination of L and S.
-    #num_true_partworths: This is the number of true/baseline partworths we will use to evaluate the d-error of a design.
+    #AM, AV, and AO (and MO). This set of random batches will be used for each level combination of L and S. Should be an integer
+    #greater than or equal to one.
+    
+    #num_true_partworths: This is the number of true/baseline partworths we will use to evaluate the d-error of a design. Should be
+    #an integer greater than or equal to one.
     
     attr_num = len(init_mu)
     
@@ -248,11 +264,11 @@ def norm_AO_MO_data_generation(init_mu, init_Sig, batch_size, L, S, num_random_b
                     #of the final covariance matrix.
                     batch_simulate_d_values.append(np.sqrt(np.linalg.det(Sig)))
                     
-                #We average the d-values from the simulation for a batch and store it in a list.
+                #We average the d-values from the simulation for a batch and store it in a list. This is the D-error of the batch i
+                #under distribution N(L*mu, S*Sig).
                 average_d_error.append(np.mean(batch_simulate_d_values))
                 
     return average_orthogonality, maximum_orthogonality, average_question_mean, average_question_variance, L_mu, S_Sig, init_sqrt_determinant, average_d_error
-
 
 
 #This function constructs a batch design based off of average question mean, average question variance, and average
@@ -261,20 +277,30 @@ def norm_AO_MO_data_generation(init_mu, init_Sig, batch_size, L, S, num_random_b
 #that go with question mean, question variance, and question orthogonality.
 
 def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,quest_orth_log_coeff,t_lim = 100,logfile=False):
-    #mu: expectation of prior on beta
-    #Sig: Covariance matrix of prior on beta
+    #mu: expectation of prior on the DM's partworth. Should be a numpy array.
+    
+    #Sig: Covariance matrix of prior on the DM's partworth.  Should be a square two-dimensional numpy array
+    #having rows and columns with same number of entries corresponding to mu.
+    
+    
     #batch_size: the number of questions we want to return in our batch design. This should be less or equal to the number
-    #of attributes
+    #of attributes (length of mu).
+    
     #quest_mean_log_coeff: this is a fitting parameter that goes with the average question mean and is obtained 
     #by fitting a linear model log (D-err/Init_det) ~ AM/||l*mu|| + AV/||s*Sig|| + AO/||s*Sig|| + ||l*mu|| + ||s*Sig|| and using the fitted parameter that goes with
-    #AM/||l*mu||
+    #AM/||l*mu||.
+    
     #quest_var_log_coeff: this is a fitting parameter that goes with the average question variance and is obtained 
     #by fitting a linear model log (D-err/Init_det) ~ AM/||l*mu|| + AV/||s*Sig|| + AO/||s*Sig|| + ||l*mu|| + ||s*Sig|| and using the fitted parameter that goes with
-    #AV/||s*Sig||
+    #AV/||s*Sig||.
+    
     #quest_orth_log_coeff: this is a fitting parameter that goes with the average question orthogonality and is obtained 
     #by fitting a linear model log (D-err/Init_det) ~ AM/||l*mu|| + AV/||s*Sig|| + AO/||s*Sig|| + ||l*mu|| + ||s*Sig|| and using the fitted parameter that goes with
-    #AO/||s*Sig||
-    #(l,s) are scaling parameters for mu and Sig that divide the space into different signal-to-noise ratio regions.
+    #AO/||s*Sig||.
+    
+    #In the above three comments regarding the coefficients, (l,s) are scaling parameters for mu and Sig that divide the space into 
+    #different signal-to-noise ratio regions.
+    
     #t_lim: this is the max amount of time we want to take to construct the batch
     #logfile: determine whether to print out a logfile of the optimization procedure.
 
@@ -282,7 +308,7 @@ def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     #have an unbounded optimization problem. In most situations, the fitting procedure
     #will result in a positive value for quest_orth_log_coeff, but very rarely the fitting
     #procedure will give a statistically non-significant but negative value for
-    #quest_orth_log_coeff that makes the optimization problem bounded. When the quest_orth_log_coeff
+    #quest_orth_log_coeff that makes the optimization problem unbounded. When the quest_orth_log_coeff
     #is less than 0, we decide to set it equal to 0. This will result in a bounded optimization problem,
     #but the quality of the solution in terms of D-error may not be sufficient because we are no
     #longer controlling orthogonality in the objective function.
@@ -366,34 +392,45 @@ def batch_design_AO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,q
     return[Q,D]
 
 
-
 #This function constructs a batch design based off of average question mean, average question variance, and MAXIMUM
 #question orthogonality. For the average question orthogonality, we take the absolute value of the summands rather than
 #the square. We also normalize mu and Sig in the objective so that we do not need to keep on refitting the parameters 
 #that go with question mean, question variance, and question orthogonality.
 
 def batch_design_MO(mu,Sig,batch_size,quest_mean_log_coeff,quest_var_log_coeff,quest_orth_log_coeff,t_lim = 100,logfile=False):
-    #mu: expectation of prior on beta
-    #Sig: Covariance matrix of prior on beta
+    #mu: expectation of prior on the DM's partworth. Should be a numpy array.
+    
+    #Sig: Covariance matrix of prior on the DM's partworth.  Should be a square two-dimensional numpy array
+    #having rows and columns with same number of entries corresponding to mu.
+    
+    
     #batch_size: the number of questions we want to return in our batch design. This should be less or equal to the number
-    #of attributes
+    #of attributes (length of mu).
+    
     #quest_mean_log_coeff: this is a fitting parameter that goes with the average question mean and is obtained 
     #by fitting a linear model log (D-err/Init_det) ~ AM/||l*mu|| + AV/||s*Sig|| + MO/||s*Sig|| + ||l*mu|| + ||s*Sig|| and using the fitted parameter that goes with
     #AM/||l*mu||
+    
     #quest_var_log_coeff: this is a fitting parameter that goes with the average question variance and is obtained 
     #by fitting a linear model log (D-err/Init_det) ~ AM/||l*mu|| + AV/||s*Sig|| + MO/||s*Sig|| + ||l*mu|| + ||s*Sig|| and using the fitted parameter that goes with
     #AV/||s*Sig||
+    
     #quest_orth_log_coeff: this is a fitting parameter that goes with the average question orthogonality and is obtained 
     #by fitting a linear model log (D-err/Init_det) ~ AM/||l*mu|| + AV/||s*Sig|| + MO/||s*Sig|| + ||l*mu|| + ||s*Sig|| and using the fitted parameter that goes with
     #MO/||s*Sig||
-    #(l,s) are scaling parameters for mu and Sig that divide the space into different signal-to-noise ratio regions.
+    
+    #In the above three comments, (l,s) are scaling parameters for mu and Sig that divide the space into different 
+    #signal-to-noise ratio regions.
+    
     #t_lim: this is the max amount of time we want to take to construct the batch
+    
+    #logfile: determine whether to print out a logfile of the optimization procedure.
 
     # Make sure that quest_orth_log_coeff is greater or equal to zero. Otherwise, we will
     # have an unbounded optimization problem. In most situations, the fitting procedure
     # will result in a positive value for quest_orth_log_coeff, but very rarely the fitting
     # procedure will give a statistically non-significant but negative value for
-    # quest_orth_log_coeff that makes the optimization problem bounded. When the quest_orth_log_coeff
+    # quest_orth_log_coeff that makes the optimization problem unbounded. When the quest_orth_log_coeff
     # is less than 0, we decide to set it equal to 0. This will result in a bounded optimization problem,
     # but the quality of the solution in terms of D-error may not be sufficient because we are no
     # longer controlling orthogonality in the objective function.
