@@ -128,7 +128,7 @@ def question_extractor(prod):
 
 #!!! rng will need to be set before calling this function !!!
 
-def norm_AO_MO_data_generation(init_mu, init_Sig, batch_size, L, S, num_random_batches, num_true_partworths):
+def norm_AO_MO_data_generation(init_mu, init_Sig, batch_size, L, S, num_random_batches, num_true_partworths,rng):
     #init_mu: This is the initial expectation of the partworths. Should be a numpy array.
     
     #init_Sig: This is the initial covariance matrix of the partworths. Should be a square two-dimensional numpy array
@@ -148,6 +148,9 @@ def norm_AO_MO_data_generation(init_mu, init_Sig, batch_size, L, S, num_random_b
     
     #num_true_partworths: This is the number of true/baseline partworths we will use to evaluate the d-error of a design. Should be
     #an integer greater than or equal to one.
+    
+    #rng: random number generator for generating multivariate normal vectors. Should be of the form rng = np.random.default_rng(seed)
+    #for some seed value.
     
     attr_num = len(init_mu)
     
