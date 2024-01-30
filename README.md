@@ -28,6 +28,8 @@ A collection of code for the experiments ran in "Batch Sequential Designs in Bay
 
 <ins>parameter_file_MIPvsEnum_v6_exp.txt</ins>: This file corresponds to the experiment in "Quality of MIP-Based Batch Design Solutions". This txt file can be used if the user wishes to run all six experiment settings ( (low signal-to-noise, balanced), (medium signal-to-noise, balanced), (high signal-to-noise, balanced),(low signal-to-noise, imbalanced), (medium signal-to-noise, imbalanced), (high signal-to-noise, imbalanced) ) in a job array using a Bash script. Column one corresponds to the signal-to-noise setting ("1":low, "2": medium, "3": high) and column two corresponds to the balanced ("1") or imbalanced ("2") setting discussed in Section S3 of the supplementary materials.
 
+<ins>Gurobi and Anaconda Installation Guide.pdf</ins>: This file will aid in the process of installing Gurobi and Anaconda (for Jupyter Notebook).
+
 **Running Experiments**: <br />
 --------
 
