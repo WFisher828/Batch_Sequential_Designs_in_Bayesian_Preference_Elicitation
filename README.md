@@ -80,6 +80,9 @@ If one has access to a computing cluster, they may download the notebook as a py
 Here we describe the output of the experiments after they have been ran. 
 
 <ins>Questionnaire Simulation</ins>: 
+* Low Signal-to-Noise Ratio Regime:
+    * Test
+    * Test
 * ThirdseqExpv2_Normalized_AO_MO_Model_Data_mu025_Sig4Ident_batchsize4_L_05_1_2_S_05_1_2_nrb_1000_ntp_50.csv: This contains summary statistics and D-errors of 1000 randomly generated batch designs (of size 4) under the different distributions $N(l \mu, s \Sigma)$ for $l \in \[0.5,1,2\]$ and $s \in \[0.5,1,2\]$ used as data for the offline learning frameworks discussed in Section 3.3 in the (balanced) LOW signal-to-noise ratio regime. Used for determining parameters for MIP-AC and MIP-MC.
 * ThirdseqExpv2_Normalized_AO_MO_Model_Data_mu1_Sig1Ident_batchsize4_L_05_1_2_S_05_1_2_nrb_1000_ntp_50.csv: This contains summary statistics and D-errors of 1000 randomly generated batch designs (of size 4) under the different distributions $N(l \mu, s \Sigma)$ for $l \in \[0.5,1,2\]$ and $s \in \[0.5,1,2\]$ used as data for the offline learning frameworks discussed in Section 3.3 in the (balanced) MEDIUM signal-to-noise ratio regime. Used for determining parameters for MIP-AC and MIP-MC.
 * ThirdseqExpv2_Normalized_AO_MO_Model_Data_mu4_Sig025Ident_batchsize4_L_05_1_2_S_05_1_2_nrb_1000_ntp_50.csv: This contains summary statistics and D-errors of 1000 randomly generated batch designs (of size 4) under the different distributions $N(l \mu, s \Sigma)$ for $l \in \[0.5,1,2\]$ and $s \in \[0.5,1,2\]$ used as data for the offline learning frameworks discussed in Section 3.3 in the (balanced) HIGH signal-to-noise ratio regime. Used for determining parameters for MIP-AC and MIP-MC.
