@@ -77,6 +77,11 @@ Now, to run the experiment directly in the notebook, one will comment-out/delete
 
 If one has access to a computing cluster, they may download the notebook as a python file and write a Bash script to run all 3x2 experiment settings as a batch job array, using parameter_file_MIPvsEnum_v6_exp.txt as the inputs.
 
+Note the following specifications for the experiments presented in the main paper and supplementary materials: 
+* In the main paper, the experiment "Questionnaire Simulation" was ran as a job array on Clemson University's Palmetto computing cluster. The Python version was 3.9. The Gurobi version was 10.0.0 (linux64). The CPU model was Intel(R) Xeon(R) Gold 6258R CPU @ 2.70GHz. The physical core, logical processor, and thread count information is: 56 physical cores, 56 logical processors, using up to 32 threads.
+* In the supplementary material, the experiment "Quality of MIP-Based Batch Design Solutions" was ran as a job array on Clemson University's Palmetto computing cluster. The Python version was 3.9. The Gurobi version was 10.0.0 (linux64). The CPU model was Intel(R) Xeon(R) Platinum 8358 CPU @ 2.60GHz. The physical core, logical processor, and thread count information is: 64 physical cores, 64 logical processors, using up to 32 threads.
+
+
 **Experiment Output Files**: <br />
 --------
 Here we describe the output of the experiments after they have been ran. 
