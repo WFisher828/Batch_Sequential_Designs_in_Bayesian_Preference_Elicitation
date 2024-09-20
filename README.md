@@ -30,6 +30,12 @@ A collection of code for the experiments ran in "Batch Sequential Designs in Bay
 
 <ins>Gurobi and Anaconda Installation Guide.pdf</ins>: This file will aid in the process of installing Gurobi and Anaconda (for Jupyter Notebook).
 
+<ins>Toyota Corolla Concept Designs.csv</ins>: This file contains all 576 possible configurations of the Toyota Corolla vehicle concept designs in the tradespace exploration case study.
+
+<ins>Toyota_Corolla_Prior_Design.csv</ins>: This file contains the static choice experiment design created using JMP to help create a prior for the simulated DM in the tradespace exploration case study.
+
+<ins>Case_Study_Toyota_Design.ipynb</ins>: This is a Jupyter notebook which contains code to run the case study.
+
 **Running Experiments**: <br />
 --------
 
